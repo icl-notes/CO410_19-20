@@ -1,0 +1,22 @@
+\documentclass[11pt,a4paper,twoside]{report}
+
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+\DeclareUnicodeCharacter{00A0}{~}
+
+\usepackage[a4paper, top=2cm, bottom=2cm, left=2cm, right=2cm, marginparwidth=1.75cm]{geometry}
+\usepackage[colorlinks=true, allcolors=blue]{hyperref}
+\usepackage{enumitem}
+
+\usepackage{graphicx}
+\usepackage{wrapfig}
+\usepackage[leftcaption]{sidecap}
+
+\begin{document}
+
+\input{spanner_notes.tex}
+
+\nocite{*}
+\bibliographystyle{unsrt}
+\bibliography{scalable_notes}
+\end{document}

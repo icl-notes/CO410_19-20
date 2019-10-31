@@ -1,0 +1,338 @@
+#LyX 2.2 created this file. For more info see http://www.lyx.org/
+\lyxformat 508
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass article
+\use_default_options true
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry true
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 2cm
+\topmargin 2cm
+\rightmargin 2cm
+\bottommargin 2cm
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Standard
+Spanner: Globally distributed database
+\begin_inset Newline newline
+\end_inset
+
+Def: External Consistency/Linearizability: If transaction T1 commits before
+ another transaction T2 starts, then T1’s commit timestamp is smaller than
+ T2’s
+\begin_inset Newline newline
+\end_inset
+
+Spanner is a scalable, multi-version, globally-distributed, synchronously-replci
+ated database.
+\begin_inset Newline newline
+\end_inset
+
+Issues addressed:
+\end_layout
+
+\begin_layout Itemize
+Wanted strong consistency (which via CAP theorem meant less availability)
+\end_layout
+
+\begin_layout Itemize
+Wanted ACID transactions
+\end_layout
+
+\begin_layout Itemize
+Wanted schema
+\end_layout
+
+\begin_layout Itemize
+Spanner is an example of NewSQL (SQL like model, but scalability and performance
+)
+\end_layout
+
+\begin_layout Itemize
+Built for F1 (important app for Google).
+ Was MySQL cluster, had big problems of resharding (done manually) and schema
+ migration.
+ 
+\end_layout
+
+\begin_layout Itemize
+Wanted easy geodistribution (coping with whole datacentre failure)
+\end_layout
+
+\begin_layout Itemize
+Wanted to automate the process of replication
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Graphics
+	filename spanner_system_diagram.png
+	scale 10
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Main Ideas:
+\end_layout
+
+\begin_layout Itemize
+TrueTime API
+\end_layout
+
+\begin_layout Itemize
+General-purpose transactions (ACID).
+ Support different transaction types which are optimised e.g.
+ non-blocking reads.
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Write transactions guarantees 'external consistency' (strong form of consistency
+)
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Writes buffered.
+ Write locks acquired at commit time (when Paxos prepare is done).
+\end_layout
+
+\begin_layout Itemize
+But reducing availabilty for this (CAP) - block to wait out the uncertainty.
+ 
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Read-Write – requires locks
+\end_layout
+
+\begin_layout Itemize
+Read-Only – lock free
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Requires declaration before start of transaction
+\end_layout
+
+\begin_layout Itemize
+Reads information that is up-to-date
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Snapshot-Read - read information from past by specifying timestamp or bound
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Non-blocking
+\end_layout
+
+\begin_layout Itemize
+Use specific timestamp from past or timestamp bound so that data until that
+ point will be read
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Itemize
+Transaction serialization via global timestamps
+\end_layout
+
+\begin_layout Itemize
+Grouping servers responsible for parts of the data.
+ 
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Want multiple groups to be able to partition data so you have smaller set
+ of nodes to run Paxos on so its quicker.
+ 
+\end_layout
+
+\begin_layout Itemize
+Also, with multiple paxos groups they can have different ways of replication
+ (nr replicas, location, etc).
+ 
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Layering of how transactions are executed.
+ 
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+If transaction can be done in one Paxos group then just run on that group.
+ 
+\end_layout
+
+\begin_layout Itemize
+When the transaction involves multiple paxos groups, then use the top layer
+ (which uses strict two phase commit).
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Schematised, semi-relational (tabular) data model
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+SQL-like query interface
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Atomic schema changes
+\end_layout
+
+\begin_layout Itemize
+Automatic sharding, rebalancing, failure response
+\end_layout
+
+\begin_layout Itemize
+Data chunks - directory/bucket.
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Unit of data placement and for defining replication properties.
+\end_layout
+
+\begin_layout Itemize
+Split into fragments
+\end_layout
+
+\begin_layout Itemize
+Locality encoded in to it - pick keys to get better locality.
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+TrueTime API
+\end_layout
+
+\begin_layout Itemize
+Global timestamps
+\end_layout
+
+\begin_layout Itemize
+Exposes uncertainty in time and guarantees a bound on it
+\end_layout
+
+\begin_layout Itemize
+Timestamp as a range 
+\end_layout
+
+\begin_layout Itemize
+Timestamp assigned at commit time - while locks are held
+\end_layout
+
+\begin_layout Itemize
+Truetime timestamp getting is local, but these timestamps can be globally
+ ordered (by reasoning about clock uncertainty/clock skew and waiting out
+ the uncertainty to avoid overlapping timestamps)
+\end_layout
+
+\begin_layout Itemize
+TrueTime has masters that globally synchronize and decide on the global
+ bound.
+ 
+\end_layout
+
+\begin_layout Itemize
+If network partition you lose the synchronization between the truetime masters.
+ So must assume the clock skew increases over time, so over time the wait
+ time will increase to where the system is very slow.
+ (smaller clock uncertainty, larger throughput rate)
+\end_layout
+
+\begin_layout Itemize
+Uses GPS and atomic clocks to get accurate time
+\end_layout
+
+\begin_layout Standard
+Additional points:
+\end_layout
+
+\begin_layout Itemize
+If network partition happens, Paxos waits for 10 secs to get new leader.
+\end_layout
+
+\end_body
+\end_document
