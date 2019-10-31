@@ -1,0 +1,62 @@
+\chapter{Zookeeper: Wait-free coordination for large scale systems}
+
+Coordination examples: Group membership • Leader election • Dynamic Configuration • Status monitoring • Queuing • Critical sections 
+
+What is Zookeeper: Highly available, scalable, distributed, configuration, consensus, group membership, leader election, naming, and coordination service.
+
+\section{Main contributions}
+\begin{itemize}
+    \item Coordination kernel – Wait-free coordination
+    \item Coordination recipes – Build higher primitives
+    \item Experience with coordination – Some application use ZooKeeper
+\end{itemize}
+
+\section{Zookeeper properties}
+\begin{itemize}
+    
+    \item File API without partial reads/writes
+    \item Ordered updates and strong persistence guarantees
+    \item Conditional updates (version)
+    \item Watches for data changes
+    \item Ephemeral nodes
+    \item Generated file names
+    \item No renames 
+\end{itemize}
+    
+\section{Zookeeper guarantees}
+\begin{itemize}
+    \item Linearisable writes – Writes serialisable + respect precedence
+    \item FIFO client order 
+    \begin{itemize}
+        \item Clients never detect old data
+        \item Clients get notified of change to watched data within bounded time
+        \item All requests from client processed in order
+        \item All results received by client consistent with results received by other clients
+    \end{itemize}
+\end{itemize}
+
+\section{Zookeeper model}
+
+\begin{itemize}
+    \item Znode
+    \begin{itemize}    
+        \item In-memory data node
+        \item Hierarchical namespace
+        \item Types: Regular/Ephemeral (can be automatically removed by system)
+        \item Flags: Sequential
+        \item Designed to store only meta-data or configuration, not general data storage
+        \item Can store information such as timestamp version
+    \end{itemize}
+    
+    \item Watch mechanism
+    \begin{itemize}
+        \item Get notification upon update to data
+        \item One time triggers
+    \end{itemize}
+    
+    \item Client sessions
+    \begin{itemize}
+        \item Session = connection to server from client
+        \item Timeout mechanism
+    \end{itemize}
+\end{itemize}
