@@ -1,0 +1,80 @@
+\chapter{(Spark) Resilient Distributed Datasets: A Fault Tolerant Abstraction for In-Memory Cluster Computing}
+
+\section{Motivation}
+They want to leverage distributed memory to make it more efficient to resuse intermediate results across multiple computations. Iterative MapReduce runtimes etc perform data sharing implicitly for the pattern of computation they support, and do not provide a general that the user can employ to share data of their choice among operations of their choice.
+Wanted to allow big data analysis but with:
+\begin{itemize}
+    \item More complex, multi-stage applications that reuse intermediate results (e.g. iterative ml, graph processing)
+    \item More interactive ad-hoc queries (interactive data mining where a user runs many ad-hoc queries on the same data)
+\end{itemize}
+Hence needed efficient primitives for data sharing (in MapReduce the only way to share data across jobs is stable storage - slow due to replication and disk I/O, but necessary for fault tolerance).
+Goal: fault-tolerant and efficient distributed memory abstraction.
+In-memory data sharing.
+
+With fine-grained updates to mutable state, one can only provide fault tolerance through replicating the data across machines or logging updates across machines. These are expensive for data-intensive workloads cause they require copying large amounts of data over the cluster network and they incur substantial storage overhead.
+
+\section{Resilient Distributed Datasets(RDDS)}
+\begin{itemize}
+    \item Distributed memory abstraction that lets programmers perform in-memory computations on large clusters in a fault-tolerant manner.
+    \item Enables efficient data reuse. Lets users explicitly persist intermediate results in memory, control their partitioning to optimize data placement and manipulate them using a rich set of operators.
+    \item Store data lineage ins\section{Representing RDDs}
+    \begin{itemize}
+        \item partitions
+        \item dependencies on pa\section{Representing RDDs}
+        \begin{itemize}
+            \item partitions
+            \item dependencies on parent RDDs
+            \item function for computing the dataset based on its parents
+            \item metadata about its partitioning scheme - hash/range partitioned
+            \item preferredLocations(p) - list nodes where partition p can be accessed faster due to data locality
+            
+        \end{itemize}
+        Dependencies are narrow(each partition of parent is used by at most one partition of the child RDD) or wide(multiple partitions may depend on it).
+        Narrow good for pipelined execution on one node and less recomputing needed upon recovery.rent RDDs
+        \item function for computing the dataset based on its parents
+        \item metadata about its partitioning scheme - hash/range partitioned
+        \item preferredLocations(p) - list nodes where partition p can be accessed faster due to data locality
+        
+    \end{itemize}
+    Dependencies are narrow(each partition of parent is used by at most one partition of the child RDD) or wide(multiple partitions may depend on it).
+    Narrow good for pipelined execution on one node and less recomputing needed upon recovery.tead of data
+    \item Recompute data based on lineage. Used in fault recovery - much quicker and less expensive than using replication. Only the lost partitions of an RDD need to be recomputed upon failure and can be recomputed in parallel on different nodes.
+    \item Partitioned across nodes
+    \item Immutable to simplify lineage tracking
+    \item Can only be built (created, written) through coarse-grained, deterministic transformations (map, filter, join etc). This restricts RDDs to apps that perform bulk writes, but allows for more efficient fault-tolerace.
+    \item Note that reads can be coarse- or fine-grained.
+    \item Checkpointing to disk to avoid unbounded lineage
+    \item Can efficiently express many parallel algos (these apply the same operator to many items). Unify many programming models and support new apps too.
+    \item Best for batch workloads (coarse granularity, memory bandwidth levels of write throughput(so quite high))
+    \item Straggler mitigation: Since RDDs are immutable the system can run backup copies of slow tasks (like in MapReduce). Hard to do with distributed shared memory cause two copies of a task would access the same memory locations and interfere with each others' updates.
+\end{itemize}
+
+\section{Representing RDDs}
+\begin{itemize}
+    \item partitions
+    \item dependencies on parent RDDs
+    \item function for computing the dataset based on its parents
+    \item metadata about its partitioning scheme - hash/range partitioned
+    \item preferredLocations(p) - list nodes where partition p can be accessed faster due to data locality
+    
+\end{itemize}
+Dependencies are narrow(each partition of parent is used by at most one partition of the child RDD) or wide(multiple partitions may depend on it).
+Narrow good for pipelined execution on one node and less recomputing needed upon recovery.
+
+\section{Spark programming interface}
+\begin{itemize}
+    \item DryadLINQ-like API in Scala
+    \item Usable interactively from scala interpreter
+    \item Provides:
+    \begin{itemize}
+        \item RDDs
+        \item Operations on RDDs: transformations (build new RDDs), actions (compute and output results to app/storage system)
+        \item Control each RDDs partitioning (layout across nodes) and persistence (storage in RAM, on disk, replicating across machines etc.). Can co-partition (e.g. hash both on the joining field) RDDs that are e.g. repeatedly joined to avoid shuffles. Persistent RDDs can be storage in-memory as deserialized Java objects, in-memory as serialized data or on-disk. 
+        
+    \end{itemize}
+    
+\end{itemize}
+
+\section{Spark scheduler}
+In bulk operations on RDDs, a runtime can schedule tasks based on data locality to improve performance.
+Creates DAG of stages to execute (narrow, wide dependencies, shuffle stages). Then launches tasks to compute missing partitions from each stage until it has computed the target RDD.

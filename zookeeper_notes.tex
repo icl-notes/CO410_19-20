@@ -13,8 +13,8 @@ What is Zookeeper: Highly available, scalable, distributed, configuration, conse
 
 \section{Zookeeper properties}
 \begin{itemize}
-    
-    \item File API without partial reads/writes
+    \item Simplified file system type API 
+    \item No partial reads/writes
     \item Ordered updates and strong persistence guarantees
     \item Conditional updates (version)
     \item Watches for data changes
@@ -42,10 +42,11 @@ What is Zookeeper: Highly available, scalable, distributed, configuration, conse
     \begin{itemize}    
         \item In-memory data node
         \item Hierarchical namespace
+        \item Manipulated through the Zookeeper API
         \item Types: Regular/Ephemeral (can be automatically removed by system)
         \item Flags: Sequential
         \item Designed to store only meta-data or configuration, not general data storage
-        \item Can store information such as timestamp version
+        \item CAn store information such as timestamps or version counters to track updates. Support conditional writes based on timestamp/version.
     \end{itemize}
     
     \item Watch mechanism

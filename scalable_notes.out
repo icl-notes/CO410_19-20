@@ -1,10 +1,21 @@
-\BOOKMARK [0][-]{chapter.1}{Spanner: Globally distributed database}{}% 1
-\BOOKMARK [1][-]{section.1.1}{Issues addressed}{chapter.1}% 2
-\BOOKMARK [1][-]{section.1.2}{Main Ideas}{chapter.1}% 3
-\BOOKMARK [2][-]{subsection.1.2.1}{TrueTime API}{section.1.2}% 4
-\BOOKMARK [1][-]{section.1.3}{Additional points}{chapter.1}% 5
-\BOOKMARK [0][-]{chapter.2}{Zookeeper: Wait-free coordination for large scale systems}{}% 6
-\BOOKMARK [1][-]{section.2.1}{Main contributions}{chapter.2}% 7
-\BOOKMARK [1][-]{section.2.2}{Zookeeper properties}{chapter.2}% 8
-\BOOKMARK [1][-]{section.2.3}{Zookeeper guarantees}{chapter.2}% 9
-\BOOKMARK [1][-]{section.2.4}{Zookeeper model}{chapter.2}% 10
+\BOOKMARK [0][-]{chapter.1}{Bigtable}{}% 1
+\BOOKMARK [0][-]{chapter.2}{Dynamo}{}% 2
+\BOOKMARK [0][-]{chapter.3}{Spanner: Globally distributed database}{}% 3
+\BOOKMARK [1][-]{section.3.1}{Issues addressed}{chapter.3}% 4
+\BOOKMARK [1][-]{section.3.2}{Main Ideas}{chapter.3}% 5
+\BOOKMARK [2][-]{subsection.3.2.1}{TrueTime API}{section.3.2}% 6
+\BOOKMARK [1][-]{section.3.3}{Additional points}{chapter.3}% 7
+\BOOKMARK [0][-]{chapter.4}{Zookeeper: Wait-free coordination for large scale systems}{}% 8
+\BOOKMARK [1][-]{section.4.1}{Main contributions}{chapter.4}% 9
+\BOOKMARK [1][-]{section.4.2}{Zookeeper properties}{chapter.4}% 10
+\BOOKMARK [1][-]{section.4.3}{Zookeeper guarantees}{chapter.4}% 11
+\BOOKMARK [1][-]{section.4.4}{Zookeeper model}{chapter.4}% 12
+\BOOKMARK [0][-]{chapter.5}{Map reduce}{}% 13
+\BOOKMARK [0][-]{chapter.6}{\(Spark\) Resilient Distributed Datasets: A Fault Tolerant Abstraction for In-Memory Cluster Computing}{}% 14
+\BOOKMARK [1][-]{section.6.1}{Motivation}{chapter.6}% 15
+\BOOKMARK [1][-]{section.6.2}{Resilient Distributed Datasets\(RDDS\)}{chapter.6}% 16
+\BOOKMARK [1][-]{section.6.3}{Representing RDDs}{chapter.6}% 17
+\BOOKMARK [1][-]{section.6.4}{Representing RDDs}{chapter.6}% 18
+\BOOKMARK [1][-]{section.6.5}{Representing RDDs}{chapter.6}% 19
+\BOOKMARK [1][-]{section.6.6}{Spark programming interface}{chapter.6}% 20
+\BOOKMARK [1][-]{section.6.7}{Spark scheduler}{chapter.6}% 21
