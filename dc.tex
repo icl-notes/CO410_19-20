@@ -1,1 +1,75 @@
 \chapter{Data Center and cloud}
+
+\paragraph{Cloud}. Large pool of easily usable \textbf{virtualized} computing
+resources, development \textbf{platforms} and various \textbf{services} and
+application (metered service over a network).
+\begin{multicols}{2}
+\begin{itemize}
+\item[$+$] Speed – services provided on demand
+\item[$+$] Global scale and elasticity
+\item[$+$] Productivity
+\item[$+$] Performance and Security
+\item[$+$] Customizability
+\item[$-$] Dependency on network and internet connectivity
+\item[$-$] Security and Privacy
+\item[$-$] Cost of migration
+\item[$-$] Cost and risk of vendor lock-in
+\end{itemize}
+\end{multicols}
+
+\paragraph{Types of cloud}
+\begin{itemize}
+\item \textbf{Public}: Cloud vendors offer their computing resources over the Internet
+\item \textbf{Private}: infrastructure used exclusively by a single business. Services
+  on private network
+\item \textbf{Hybrid}: data and applications are shared between the above. Easier for
+  optimizing existing infrastructure, security and compliance
+\end{itemize}
+
+\paragraph{Cloud Service Models}. google app engine
+\begin{itemize}
+  \item \textbf{IaaS}: IT infrastructure – servers and VMs, storage, networks, firewall and security
+  \item \textbf{PaaS}: Environment for applications – servers, storage, network,
+    OS, middleware, databases
+  \item \textbf{FaaS}: Set-up, capacity planning, and server management
+  \item \textbf{SaaS}: Software over the Internet. Entirely managed by cloud
+    provider (updates, patches)
+\end{itemize}
+
+\paragraph{Data centers} Physical facility that enterprises use to house
+computing and infrastructure in a variety of networked formats.
+\begin{itemize}
+\item PCSS: Power, Cooling, Shelter, Security
+\item TCO = CapEx + OpEx (capital + operations)
+\item Power Usage Effectiveness: PUE = ${E_{used}} / {E_{given}}$
+\item 3\% electricity, 2\% Greenhouse. Monthly costs = \$3,530,920
+\item Reduce costs: raise temp, reuse heat, choose location (arctic, dam),
+  reduce conversion of $E$
+\item Energy consumption not proportional to load. Need Virtualisation +
+  resource pooling to consolidate service on fewer servers. 6-15\% utilisation
+  to 30\% (virtualised).
+\end{itemize}
+
+\paragraph{Improving Resource Utilisation}
+\begin{itemize}
+\item Hyperscale system management software: DC as a warehouse-scale computer.
+  Software managed pooled resources that include compute, network, and
+  storage.
+\item Dynamic resource allocation: Virtualisation isn't enough, need to
+  dynamically allocate CPU resources across servers and racks, allowing admins
+  to quickly migrate resources to address the shifting demand (2x to 6x better).
+\item Networking: Software Defined Networking (SDN). Improve internal
+  machine-to-machine communication with custom protocols.
+\end{itemize}
+
+\paragraph{Rack scale computing} Made of Compute (\& accelerators), Storage
+(hot / warm / cold disks), Networking (interconnect, SDN).
+\begin{itemize}
+\item evolution: physical aggregation (shared power, cooling, rack-management)
+  $\rightarrow$ : fabric integration (fast rack-wide interconnect)
+  $\rightarrow$ resource disaggregation (pooled compute, storage, memory
+  resources)
+\item Heterogeneous Computing Resources across the Rack: Accelerators,
+  Co-processors, Intelligent storage, Intelligent (active) memory, Smart NICs,
+  In-network data processing
+\end{itemize}
