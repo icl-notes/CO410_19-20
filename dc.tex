@@ -26,12 +26,11 @@ application (metered service over a network).
   optimizing existing infrastructure, security and compliance
 \end{itemize}
 
-\paragraph{Cloud Service Models}. google app engine
+\paragraph{Cloud Service Models}
 \begin{itemize}
-  \item \textbf{IaaS}: IT infrastructure – servers and VMs, storage, networks, firewall and security
-  \item \textbf{PaaS}: Environment for applications – servers, storage, network,
-    OS, middleware, databases
-  \item \textbf{FaaS}: Set-up, capacity planning, and server management
+  \item \textbf{IaaS}: IT infrastructure – servers and VMs, storage, networks, firewall and security. Resources pooled together for multiple users. User given most control.
+  \item \textbf{PaaS}: Environment for developing, testing and managing applications – servers, storage, network, OS, middleware, databases
+  \item \textbf{FaaS}: (Serverless) Vendor does set-up, capacity planning, and server management, you just supply the logic/functions.
   \item \textbf{SaaS}: Software over the Internet. Entirely managed by cloud
     provider (updates, patches)
 \end{itemize}
@@ -40,14 +39,16 @@ application (metered service over a network).
 computing and infrastructure in a variety of networked formats.
 \begin{itemize}
 \item PCSS: Power, Cooling, Shelter, Security
-\item TCO = CapEx + OpEx (capital + operations)
-\item Power Usage Effectiveness: PUE = ${E_{used}} / {E_{given}}$
-\item 3\% electricity, 2\% Greenhouse. Monthly costs = \$3,530,920
-\item Reduce costs: raise temp, reuse heat, choose location (arctic, dam),
-  reduce conversion of $E$
-\item Energy consumption not proportional to load. Need Virtualisation +
-  resource pooling to consolidate service on fewer servers. 6-15\% utilisation
+\item (Total Cost of Ownership) TCO = CapEx + OpEx (capital + operations). Cloud removes CapEx.
+\item Power Usage Effectiveness: PUE = total energy used (all overhead) : energy delivered to the computing equipment (needed)
+\item DCs consume 3\% global electricity, produce 2\% total greenhouse emissions. Monthly costs = \$3,530,920
+\item Reduce costs: good location for cooling and power load factor (arctic, dam), raise temp (more failures but less cooling costs), reuse heat, 
+  reduce conversion of energy (e.g. work at higher voltage)
+\item Energy consumption not proportional to load - try to optimise workloads     so that the servers aren't idle. Need resource virtualisation +
+  pooling to consolidate service on fewer servers. 6-15\% utilisation
   to 30\% (virtualised).
+\item CPUs usually idle because: DC providers want to ensure low latency even at the tail ends; provisioning servers for peak demand; overhead for e.g. changing tenants; I/O rather than CPU bound programs
+\item Cloud providers must treat VMs as black boxes. Tenants may overallocate resources accidentaly - then vendor may want to utilise those unused resources. But tenants may deliberately overallocate to get really low latency. 
 \end{itemize}
 
 \paragraph{Improving Resource Utilisation}
@@ -62,14 +63,17 @@ computing and infrastructure in a variety of networked formats.
   machine-to-machine communication with custom protocols.
 \end{itemize}
 
-\paragraph{Rack scale computing} Made of Compute (\& accelerators), Storage
-(hot / warm / cold disks), Networking (interconnect, SDN).
+\paragraph{Rack scale computing} Made of compute (\& accelerators), storage
+(hot / warm / cold disks), networking (interconnect, SDN).
 \begin{itemize}
-\item evolution: physical aggregation (shared power, cooling, rack-management)
-  $\rightarrow$ : fabric integration (fast rack-wide interconnect)
-  $\rightarrow$ resource disaggregation (pooled compute, storage, memory
-  resources)
-\item Heterogeneous Computing Resources across the Rack: Accelerators,
+\item Evolution - server-centric to resource-centric design: 
+  \begin{itemize}
+    \item Before: physical aggregation (shared power, cooling, rack-management)
+    \item Now: fabric integration (fast rack-wide interconnect)
+    \item Goal: resource disaggregation (pooled compute, storage, memory
+  resources). Benefits: Scale-out by default, fine-grained control over parts (e.g. can replace one failing thing), finer resource allocation (give application exactly whats needed), better at stopping interference between workloads (less tenant interaction).
+  \end{itemize}
+\item Future: Heterogeneous Computing Resources across the Rack: Accelerators,
   Co-processors, Intelligent storage, Intelligent (active) memory, Smart NICs,
   In-network data processing
 \end{itemize}
