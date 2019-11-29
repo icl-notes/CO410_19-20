@@ -5,18 +5,17 @@ HPC and mainframes.
 }
 \begin{itemize}
 \item Pros: Single solution, powerful hardware, reliable design
-\item Cons: £££, failure models, vendor lock-in, adaptability
+\item Cons: £££, failure models (single point of failure), vendor lock-in, adaptability, no incremental scalability
 \end{itemize}
 
 \paragraph{Distributed Computing.} Want to achieve linear scalability, but
-synchronization, communication (\textbf{overheads}) prevent it. Ideally, perfect
-partition of data and compute (e.g. distribute client/server model on
-\textbf{cheap commodity hardware} (best £/resource) and account for failures and
-manage the network speed bottleneck in software (parallel algorithms and
+synchronization, communication (\textbf{overheads}) prevent it. Ideally: perfect
+partition of data and compute (e.g. distributed client/server model on \textbf{cheap commodity hardware} (best £/resource); accounts for failures and
+manages the network speed bottleneck in software (parallel algorithms and
 systems).
 
 \paragraph{Data centers} Usually DC will have non-commodity network, but it will
-still the slowest part in memory hierarchy. Focus on \textbf{scaling-out} not up
+still be the slowest part in memory hierarchy. Focus on \textbf{scaling-out} not up
 by buying cheap hardware in bulk therefore achieve economy of scale. Elasticity:
 Resources on-demand (illusion of infinite resource).
 
@@ -29,9 +28,9 @@ Resources on-demand (illusion of infinite resource).
   \item Memory: cluster memory (in-memory key/value stores, caches)
   \item Bandwidth: DC networks, CDN
   \end{itemize}
-  \item location transparency from the user's perspective (black box API)
+  \item Location transparency from the user's perspective (black box API)
   \item High availability: Mask hardware and software failures
-  \item Composition of services
+  \item Composition of independent services
 \end{itemize}
 \subsection{Answering a google search request}
 \begin{enumerate}
@@ -63,7 +62,7 @@ Resources on-demand (illusion of infinite resource).
   high throughput
 \end{itemize}
 
-\paragraph{Abstractions}: Each layer should be itself scalable.
+\paragraph{Abstractions}: Each layer should itself be scalable, network-aware and fault-tolerant.
 \begin{figure}[h]
   \centering
     \includegraphics[width=0.59\textwidth]{img/abstraction.png}
@@ -72,14 +71,14 @@ Resources on-demand (illusion of infinite resource).
 \paragraph{Design principles}
 \begin{itemize}
 \item \textbf{Stateless services}: Avoid data inconsistency. Separation of data +
-  meta-data, Use lease.
-\item \textbf{Caching}: Latency.
+  meta-data. If state needed, use leases to expire state gracefully.
+\item \textbf{Caching}: Want low latency.
 \item \textbf{Partition/aggregration pattern} (see google search above)
-\item \textbf{Consistency models}: (Most apps use a mix of strong and others).
-  Switch to weaker for latency reasons. Decide what matters (e.g. Order of posts
-  in LinkedIn news feed? Access from multiple devices?)
+\item \textbf{Consistency models}: Need replication for reliability,  
+  availability and low latency access. Most apps use a mix of strongly consistent and inconsistent operations. Weaker better for low latency but harder to reason about. Decide what matters (e.g. order of posts
+  in LinkedIn news feed? Access from multiple devices?). 
 \item \textbf{Efficient failure recovery}: Failure is very common, but full redundancy
-  too expensive $\rightarrow$ failure recovery $\Rightarrow$ Rather reduce the cost of failure recovery.
+  too expensive $\rightarrow$ use failure recovery (and try to reduce the cost of failure recovery)
   \begin{itemize}
     \item Replication: Need to replicate data and service (consistency issues)
       \item Recomputation: Use stateless protocols, form data lineage for compute jobs
