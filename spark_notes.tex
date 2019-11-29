@@ -17,27 +17,7 @@ With fine-grained updates to mutable state, one can only provide fault tolerance
 \begin{itemize}
     \item Distributed memory abstraction that lets programmers perform in-memory computations on large clusters in a fault-tolerant manner.
     \item Enables efficient data reuse. Lets users explicitly persist intermediate results in memory, control their partitioning to optimize data placement and manipulate them using a rich set of operators.
-    \item Store data lineage ins\section{Representing RDDs}
-    \begin{itemize}
-        \item partitions
-        \item dependencies on pa\section{Representing RDDs}
-        \begin{itemize}
-            \item partitions
-            \item dependencies on parent RDDs
-            \item function for computing the dataset based on its parents
-            \item metadata about its partitioning scheme - hash/range partitioned
-            \item preferredLocations(p) - list nodes where partition p can be accessed faster due to data locality
-            
-        \end{itemize}
-        Dependencies are narrow(each partition of parent is used by at most one partition of the child RDD) or wide(multiple partitions may depend on it).
-        Narrow good for pipelined execution on one node and less recomputing needed upon recovery.rent RDDs
-        \item function for computing the dataset based on its parents
-        \item metadata about its partitioning scheme - hash/range partitioned
-        \item preferredLocations(p) - list nodes where partition p can be accessed faster due to data locality
-        
-    \end{itemize}
-    Dependencies are narrow(each partition of parent is used by at most one partition of the child RDD) or wide(multiple partitions may depend on it).
-    Narrow good for pipelined execution on one node and less recomputing needed upon recovery.tead of data
+    \item Store data lineage instead of data.
     \item Recompute data based on lineage. Used in fault recovery - much quicker and less expensive than using replication. Only the lost partitions of an RDD need to be recomputed upon failure and can be recomputed in parallel on different nodes.
     \item Partitioned across nodes
     \item Immutable to simplify lineage tracking

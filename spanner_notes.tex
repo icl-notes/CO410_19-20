@@ -27,11 +27,11 @@ Spanner is a scalable, multi-version, globally-distributed, synchronously-replic
         \item Write transactions guarantees 'external consistency' (strong form of consistency)
         \begin{itemize}
             \item Writes buffered. 
-            \item Write locks acquired at commit time (when Paxos prepare is done. 
-            \item But reducing availabilty for this (CAP) - block to wait out the uncertainty.
+            \item Write locks acquired at commit time (when Paxos prepare is done). 
+            \item But reducing availability for this (CAP) - block to wait out the uncertainty.
             \item Writes must initiate the Paxos protocol at the leader.
         \end{itemize}
-        \item Reads access state directly from the underlying tablet at any replcia that is sufficiently up-to-date.
+        \item Reads access state directly from the underlying tablet at any replica that is sufficiently up-to-date.
         \item Read-Write - requires locks
         \item Read-Only - lock free
         \begin{itemize} 
@@ -113,7 +113,7 @@ Spanner is a scalable, multi-version, globally-distributed, synchronously-replic
     \item Location proxies = used by clients to locate the spanservers assigned to serve their data.
     \item Universe master = console that displays status info about all zones for interactive debugging
     \item Placement driver = handles automated movement of data across zones
-    \item Tablet: data structure. Bag of key-value mappings (key, timestamp) -> string. A container that may encapsulate multiple partitions of the row space, hence its possible to colocate mutiple directories that are frequently accessed together. Tablets are stored on top of the Colossus distributed file system. 
+    \item Tablet: data structure. Bag of key-value mappings (key, timestamp) to string. A container that may encapsulate multiple partitions of the row space, hence its possible to colocate mutiple directories that are frequently accessed together. Tablets are stored on top of the Colossus distributed file system. 
     \item Paxos state machine on each tablet.
     \item Long-lived leaders with time-based leader leases. If network partition happens, Paxos waits for 10 secs to get new leader. 
     \item Lock table at each replica that is a leader. Contains state for 2-phase locking.
